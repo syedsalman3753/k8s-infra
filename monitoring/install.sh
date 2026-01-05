@@ -7,6 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=cattle-monitoring-system
+VERSION="100.1.3+up19.0.3"
 
 echo Create namespace cattle-monitoring-system
 kubectl create namespace $NS
@@ -17,9 +18,9 @@ function installing_monitoring() {
   helm repo update
 
   echo Installing Crds for Monitoring
-  helm -n $NS install monitoring-crd mosip/rancher-monitoring-crd
+  helm -n $NS install monitoring-crd mosip/rancher-monitoring-crd --version $VERSION --create-namespace
   echo Installing Monitoring
-  helm -n $NS install monitoring mosip/rancher-monitoring -f values.yaml
+  helm -n $NS install monitoring mosip/rancher-monitoring -f values.yaml --version $VERSION --create-namespace
   echo Installed monitoring
   return 0
 }
